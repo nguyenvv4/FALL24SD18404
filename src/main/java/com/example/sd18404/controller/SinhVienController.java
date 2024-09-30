@@ -6,12 +6,13 @@ import com.example.sd18404.model.User;
 import com.example.sd18404.repository.LopHocRepository;
 import com.example.sd18404.repository.SinhVienRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,8 +41,19 @@ public class SinhVienController {
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") Integer id){
+    public String delete(@PathVariable("id") Integer id) {
         sinhVienRepository.deleteById(id);
         return "redirect:/sinh-vien";
+    }
+
+    @GetMapping("/page")
+    public String phanTrang(Model model,
+                            @RequestParam(value = "page", defaultValue = "0") Integer page,
+                            @RequestParam(value = "size", defaultValue = "3") Integer size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<SinhVien> list = sinhVienRepository.findAll(pageable);
+        model.addAttribute("listSinhVien", list.getContent());
+        return "/sinh-vien";
     }
 }
