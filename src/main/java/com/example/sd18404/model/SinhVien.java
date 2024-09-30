@@ -25,4 +25,8 @@ public class SinhVien {
     private Integer age;
 
     private String status;
+
+    @ManyToOne
+    @JoinColumn(name = "lop_hoc")
+    private LopHoc lopHoc;
 }

@@ -11,7 +11,26 @@
 </head>
 <body>
 <h2>Danh sach sinh vien </h2>
+<form action="/sinh-vien/add" method="post">
+    <label>name</label>
+    <input type="text" name="name"><br>
+    <label>address</label>
+    <input type="text" name="address"><br>
+    <label>age</label>
+    <input type="text" name="age"><br>
+    <label>class</label>
+    <select name="lopHoc" id="">
+        <c:forEach var="lop" items="${listClass}">
+            <option value="${lop.id}">${lop.className}</option>
+        </c:forEach>
 
+    </select><br>
+    <label>status</label>
+    <input type="radio" name="status" value="active">active
+    <input type="radio" name="status" value="inactive">inactive <br>
+    <button type="submit">Add</button>
+
+</form>
 <table>
     <thead>
     <tr>
@@ -20,6 +39,7 @@
         <td>Address</td>
         <td>Age</td>
         <td>Status</td>
+        <td>Class name</td>
     </tr>
     </thead>
     <tbody>
@@ -30,7 +50,9 @@
             <td>${sinhVien.address}</td>
             <td>${sinhVien.age}</td>
             <td>${sinhVien.status}</td>
-<%--            <td><a href="/detail/${user.id}">Detail</a></td>--%>
+            <td>${sinhVien.lopHoc.className}</td>
+                <%--            <td><a href="/detail/${user.id}">Detail</a></td>--%>
+            <td><a href="/delete/${sinhVien.id}">Delete</a></td>
         </tr>
     </c:forEach>
     </tbody>
